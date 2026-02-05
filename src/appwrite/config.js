@@ -9,7 +9,7 @@ export class Service {
     constructor() {
         this.client
             .setEndpoint(conf.appwriteUrl)
-            .setProject(conf.appwriteProjectID);
+            .setProject(conf.appwriteProjectId);  // ✅ Fixed: was appwriteProjectID
         
         this.databases = new Databases(this.client);
         this.bucket = new Storage(this.client);
@@ -18,8 +18,8 @@ export class Service {
     async createPost({ title, slug, content, featuredImage, status, userId }) {
         try {
             return await this.databases.createDocument(
-                conf.appwriteDatabaseID,
-                conf.appwriteCollectionID,
+                conf.appwriteDatabaseId,      // ✅ Fixed: was appwriteDatabaseID
+                conf.appwriteCollectionId,    // ✅ Fixed: was appwriteCollectionID
                 slug,
                 {
                     title,
@@ -38,8 +38,8 @@ export class Service {
     async deletePost(slug) {
         try {
             await this.databases.deleteDocument(
-                conf.appwriteDatabaseID,
-                conf.appwriteCollectionID,
+                conf.appwriteDatabaseId,      // ✅ Fixed: was appwriteDatabaseID
+                conf.appwriteCollectionId,    // ✅ Fixed: was appwriteCollectionID
                 slug
             );
             return true;
@@ -52,8 +52,8 @@ export class Service {
     async updatePost(slug, { title, content, featuredImage, status }) {
         try {
             return await this.databases.updateDocument(
-                conf.appwriteDatabaseID,
-                conf.appwriteCollectionID,
+                conf.appwriteDatabaseId,      // ✅ Fixed: was appwriteDatabaseID
+                conf.appwriteCollectionId,    // ✅ Fixed: was appwriteCollectionID
                 slug,
                 {
                     title,
@@ -71,8 +71,8 @@ export class Service {
     async getPost(slug) {
         try {
             return await this.databases.getDocument(
-                conf.appwriteDatabaseID,
-                conf.appwriteCollectionID,
+                conf.appwriteDatabaseId,      // ✅ Fixed: was appwriteDatabaseID
+                conf.appwriteCollectionId,    // ✅ Fixed: was appwriteCollectionID
                 slug
             );
         } catch (error) {
@@ -84,8 +84,8 @@ export class Service {
     async getPosts(queries = [Query.equal("status", "active")]) {
         try {
             return await this.databases.listDocuments(
-                conf.appwriteDatabaseID,
-                conf.appwriteCollectionID,
+                conf.appwriteDatabaseId,      // ✅ Fixed: was appwriteDatabaseID
+                conf.appwriteCollectionId,    // ✅ Fixed: was appwriteCollectionID
                 queries
             );
         } catch (error) {
@@ -98,7 +98,7 @@ export class Service {
     async uploadFile(file) {
         try {
             return await this.bucket.createFile(
-                conf.appwriteBucketID,
+                conf.appwriteBucketId,        // ✅ Fixed: was appwriteBucketID
                 ID.unique(),
                 file
             );
@@ -110,7 +110,10 @@ export class Service {
 
     async deleteFile(fileId) {
         try {
-            await this.bucket.deleteFile(conf.appwriteBucketID, fileId);
+            await this.bucket.deleteFile(
+                conf.appwriteBucketId,        // ✅ Fixed: was appwriteBucketID
+                fileId
+            );
             return true;
         } catch (error) {
             console.log("Appwrite service :: deleteFile :: error", error);
@@ -119,7 +122,10 @@ export class Service {
     }
 
     getFilePreview(fileId) {
-        return this.bucket.getFilePreview(conf.appwriteBucketID, fileId);
+        return this.bucket.getFilePreview(
+            conf.appwriteBucketId,            // ✅ Fixed: was appwriteBucketID
+            fileId
+        );
     }
 }
 
