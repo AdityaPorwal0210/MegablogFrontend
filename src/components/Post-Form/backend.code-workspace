@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"path": "C:/Users/hp/HTMLfiles"
+		},
+		{
+			"path": "C:/Users/hp/cssfiles"
+		},
+		{
+			"path": "../../../.."
+		},
+		{
+			"path": "../../../../../tailwindcss"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "reactFiles"
+	}
+}
